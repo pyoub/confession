@@ -1,0 +1,15 @@
+
+{% block content %}
+{% for message in thread.messages %}
+    <div class="messenger_thread_message well well-sm container">
+
+
+        <div class="messenger_thread_message_body" id="message_{{ message.id }}">
+            <dt>{{ message.body }}</dt>
+        </div>
+        <div class="messenger_thread_message_info">
+            <p class="small">{% trans with {'%sender%': message.sender|e, '%date%': message.createdAt|date} from 'FOSMessageBundle' %}message_info{% endtrans %}</p>
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}
