@@ -1,0 +1,59 @@
+{% extends 'FOSMessageBundle::layout.html.twig' %}
+
+{% block fos_message_content %}
+    <div class="containair" >
+{% block javascript %}
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        var time =2000;
+
+
+        setInterval(function(){
+           var xhr = $.ajax({
+                url: '{{ url('refresh', {'threadId': thread.id})}}',
+                success: function(data) {
+                    $("#ref").html(data);
+                }
+            });
+        }, time);
+
+        $( "#sub" ).on( "click", function() {
+
+        });
+        function send() {
+            $('#spiner').css('visibility', 'visible');
+            var url = "{{ url('fos_message_thread_view', {'threadId': thread.id}) }}"; // the script where you handle the form input.
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#form").serialize(), // serializes the form's elements.
+                success: function(data)
+                {
+                    $('#spiner').css('visibility', 'hidden');
+                    $('textarea').val('');
+                }
+            });
+            e.preventDefault();
+        }
+    </script>
+{% endblock %}
+<h2>{{ thread.subject }}</h2>
+
+<div id="ref" >
+</div>
+
+<h3>{% trans from 'FOSMessageBundle' %}reply{% endtrans %}</h3>
+
+<form id="form" action="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}" method="post">
+    {% block javascript2 %}
+
+    {% endblock %}
+    {{ form_widget(form) }}
+
+    <button class="btn btn-success btn-md in" id="sub" onclick="send()"><i class="fa fa-send"></i> Send</button>
+
+</form>
+        <i id="spiner" class="fa fa-spinner fa-spin in" style="font-size:24px"></i>
+    </div>
+{% endblock %}

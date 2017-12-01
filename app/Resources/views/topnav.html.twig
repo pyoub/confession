@@ -1,0 +1,31 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Now you can confession</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse" style="margin-right: 20px;">
+            <ul class="nav navbar-nav navbar-right">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <p class="navbar-text">
+                        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+                    </p>
+                    <li>
+
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                    </li>
+
+
+                {% endif %}
+                {% if app.user %}
+            </ul>
+            <ul class="nav navbar-nav">
+            <li><a href="{{ url('fos_message_inbox') }}"><i class="fa fa-envelope" ></i>  inbox</a></li>
+            <li><a href="{{ url('fos_message_sent') }}"><i class="fa fa-send"></i>  sent</a></li>
+            <li><a href="{{ url('fos_message_deleted') }}"><i class="fa fa-trash"></i>  deleted</a></li>
+                <li><p class="navbar-text">You have {{ fos_message_nb_unread() }} new messages</p></li>
+            </ul>
+            {% endif %}
+        </div><!--/.nav-collapse -->
+</nav>

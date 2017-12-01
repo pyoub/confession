@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset={{ _charset }}" />
+        <title>{% trans from 'FOSMessageBundle' %}messenger{% endtrans %}</title>
+    </head>
+
+    <body>
+
+        <h1>{% trans from 'FOSMessageBundle' %}messenger{% endtrans %}</h1>
+
+        {% block fos_message_content %}{% endblock %}
+
+    
+    </body>
+{% endblock %}
